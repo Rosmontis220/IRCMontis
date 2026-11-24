@@ -8,7 +8,6 @@ description = "IRCMontis IRC protocol engine (Libera.chat, TLS)"
 [dependencies]
 serde.workspace = true
 thiserror.workspace = true
-tracing.workspace = true
 tokio.workspace = true
 tokio-rustls.workspace = true
 rustls.workspace = true
