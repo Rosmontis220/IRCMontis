@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@fluentui/svg-icons':
-        specifier: 1.1.344
-        version: 1.1.344
+        specifier: 1.1.347
+        version: 1.1.347
       '@fluentui/tokens':
         specifier: 1.0.0-alpha.24
         version: 1.0.0-alpha.24
@@ -366,8 +366,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fluentui/svg-icons@1.1.344':
-    resolution: {integrity: sha512-rasjaq4hBXzRS25pSY9gaqwY7NdvZJCz7G/rtpwF6mCmg2R+9TnySLhHbR+sOpkMP/IDDG28XvxRcNEQ/lJYoQ==}
+  '@fluentui/svg-icons@1.1.347':
+    resolution: {integrity: sha512-PnSrUSMa46PUIYtGoKLRrsWvfe5NtDRb4plCoAdggVGyimT36rqOiNWSa3tsAtWY2rS+Z2XD43sjqAZYgMREJg==}
 
   '@fluentui/tokens@1.0.0-alpha.24':
     resolution: {integrity: sha512-YrjGQfnxBR+9o8wXyTflON3Ohsv7OrZWYLVRU+7RaiFO1gcu36iDm3WjudlVmYuWRLDO0Gmxotm6RQNhbZuEQQ==}
@@ -1531,7 +1531,7 @@ snapshots:
   '@esbuild/win32-x64@0.25.0':
     optional: true
 
-  '@fluentui/svg-icons@1.1.344': {}
+  '@fluentui/svg-icons@1.1.347': {}
 
   '@fluentui/tokens@1.0.0-alpha.24':
     dependencies:
