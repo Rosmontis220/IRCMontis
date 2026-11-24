@@ -8,7 +8,7 @@ import { api } from '$lib/irc/api';
 import type { ChatMessage, IrcEvent, Member } from '$lib/irc/types';
 import { plainText } from '$lib/format';
 import { setupI18n, setLocale } from '$lib/i18n';
-import { applyTheme, systemScheme } from '$lib/theme';
+import { applyTheme, applySystemTheme } from '$lib/theme';
 
 export interface Settings {
   locale: 'system' | 'zh' | 'en';
@@ -122,7 +122,8 @@ class AppStore {
   }
 
   applyAppearance() {
-    applyTheme(this.settings.theme === 'system' ? systemScheme() : this.settings.theme);
+    if (this.settings.theme === 'system') void applySystemTheme();
+    else applyTheme(this.settings.theme);
   }
 
   connect() {
