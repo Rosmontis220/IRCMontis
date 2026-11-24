@@ -67,7 +67,7 @@
     text-align: center; font-size: 11px; color: var(--text-secondary);
     padding: 4px 16px; user-select: text;
   }
-  .systemline.notice { color: var(--qq-blue); }
+  .systemline.notice { color: var(--accent); }
   .actionline {
     text-align: center; font-size: 12px; color: var(--text-secondary);
     font-style: italic; padding: 4px 16px; user-select: text;
@@ -82,16 +82,17 @@
   .bubble {
     position: relative;
     background: var(--bg-bubble-other);
-    border-radius: 10px; padding: 7px 11px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--r); padding: 7px 11px;
     font-size: 13px; line-height: 1.55;
     color: var(--text-primary);
     word-break: break-word; white-space: pre-wrap;
     user-select: text;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+    box-shadow: var(--shadow-card);
   }
-  .row.self .bubble { background: var(--bg-bubble-self); }
-  .bubble.mentioned { background: var(--mention-bg); box-shadow: inset 0 0 0 1px var(--qq-blue); }
-  .bubble a { color: var(--qq-blue); text-decoration: underline; }
+  .row.self .bubble { background: var(--bg-bubble-self); border-color: transparent; border-left: 2px solid var(--accent); }
+  .bubble.mentioned { background: var(--mention-bg); box-shadow: inset 0 0 0 1px var(--accent); }
+  .bubble a { color: var(--accent-strong); text-decoration: underline; }
   .bubble.failed { opacity: 0.65; }
   .failmark {
     position: absolute; right: -18px; top: 50%; translate: 0 -50%;

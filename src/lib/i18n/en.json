@@ -20,6 +20,8 @@
   },
   "sessions": {
     "title": "Chats",
+    "channels": "Channels",
+    "direct": "Direct",
     "empty": "No chats yet — join a channel to start",
     "join": "Join channel",
     "muted": "Muted"

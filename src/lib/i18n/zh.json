@@ -20,6 +20,8 @@
   },
   "sessions": {
     "title": "会话",
+    "channels": "频道",
+    "direct": "私聊",
     "empty": "暂无会话，加入一个频道开始聊天",
     "join": "加入频道",
     "muted": "免打扰"

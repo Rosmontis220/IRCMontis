@@ -1,45 +1,55 @@
 @import 'tailwindcss';
 
+/* 简约机能风：低饱和橄榄功能色、哑光平面、发丝线、6px 圆角。无多余装饰。 */
 :root {
-  --qq-blue: #0099ff;
-  --qq-blue-deep: #0077dd;
-  --bg-app: #f2f3f5;
-  --bg-chat: #f5f6f8;
-  --font-mono: 'Cascadia Mono', Consolas, 'Courier New', monospace;
+  --accent: #6f7d3f;
+  --accent-strong: #5c6a33;
+  --bg-app: #f3f3f1;
+  --bg-chat: #f7f7f5;
   --bg-panel: #ffffff;
-  --bg-session: #f7f8fa;
-  --bg-session-active: #e8f4ff;
+  --bg-session: #ffffff;
+  --bg-session-active: color-mix(in srgb, var(--accent) 9%, var(--bg-panel));
+  --bg-hover: #f0f0ee;
   --bg-input: #ffffff;
   --bg-bubble-other: #ffffff;
-  --bg-bubble-self: #95ec69;
-  --text-primary: #1a1a1a;
-  --text-secondary: #8a8f99;
-  --text-bubble-self: #1a1a1a;
-  --border-light: #e5e6eb;
-  --danger: #f53f3f;
-  --mention-bg: #fff3e0;
-  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --bg-bubble-self: color-mix(in srgb, var(--accent) 12%, var(--bg-panel));
+  --text-primary: #1c1d1f;
+  --text-secondary: #8b8d92;
+  --text-3: #b3b5b9;
+  --text-bubble-self: #1c1d1f;
+  --border-light: #e6e6e3;
+  --border-2: #efefec;
+  --danger: #c0392b;
+  --mention-bg: color-mix(in srgb, var(--accent) 10%, var(--bg-panel));
+  --accent-soft: color-mix(in srgb, var(--accent) 16%, transparent);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --font-mono: 'Cascadia Mono', Consolas, 'Courier New', monospace;
+  --r: 6px;
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --qq-blue: #3d9eff;
-  --qq-blue-deep: #5cb0ff;
-  --bg-app: #17181a;
-  --bg-chat: #1a1b1e;
+  --accent: #9aa86a;
+  --accent-strong: #aab87c;
+  --bg-app: #161719;
+  --bg-chat: #1a1b1d;
   --bg-panel: #202124;
-  --bg-session: #1c1d20;
-  --bg-session-active: #2a3a4d;
-  --bg-input: #2a2b2e;
-  --bg-bubble-other: #2a2b2e;
-  --bg-bubble-self: #2e5d3a;
-  --text-primary: #e8eaed;
-  --text-secondary: #9aa0a6;
-  --text-bubble-self: #e8eaed;
-  --border-light: #35363a;
-  --danger: #f76965;
-  --mention-bg: #4d3a20;
-  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --bg-session: #202124;
+  --bg-session-active: color-mix(in srgb, var(--accent) 12%, var(--bg-panel));
+  --bg-hover: #26272b;
+  --bg-input: #26272b;
+  --bg-bubble-other: #26272b;
+  --bg-bubble-self: color-mix(in srgb, var(--accent) 16%, var(--bg-panel));
+  --text-primary: #e6e7e9;
+  --text-secondary: #8b8d92;
+  --text-3: #5f6165;
+  --text-bubble-self: #e6e7e9;
+  --border-light: #2c2d31;
+  --border-2: #242528;
+  --danger: #e06c5f;
+  --mention-bg: color-mix(in srgb, var(--accent) 14%, var(--bg-panel));
+  --accent-soft: color-mix(in srgb, var(--accent) 22%, transparent);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
   color-scheme: dark;
 }
 
@@ -52,6 +62,7 @@ body {
   background: var(--bg-app);
   color: var(--text-primary);
   user-select: none;
+  font-size: 13px;
 }
 
 * {
@@ -62,6 +73,93 @@ body {
 input,
 textarea {
   user-select: text;
+}
+
+.btn {
+  border: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text-primary);
+  border-radius: 5px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.12s;
+}
+.btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+.btn.primary:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #fff;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-light);
+  border-radius: 5px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: inherit;
+  padding: 7px 10px;
+  outline: none;
+}
+.field input:focus,
+.field select:focus {
+  border-color: var(--accent);
+}
+.field input[type='range'] {
+  padding: 0;
+  accent-color: var(--accent);
+}
+
+/* slide toggle switch */
+.switch {
+  position: relative;
+  width: 34px;
+  height: 18px;
+  flex: 0 0 34px;
+  border-radius: 9px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-input);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+.switch .knob {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-3);
+  transition: left 0.15s, background 0.15s;
+}
+.switch:hover {
+  border-color: var(--accent);
+}
+.switch.on {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.switch.on .knob {
+  left: 17px;
+  background: #fff;
 }
 
 .overlay {
@@ -80,7 +178,8 @@ textarea {
   max-height: calc(100vh - 64px);
   overflow-y: auto;
   padding: 20px 22px;
-  border-radius: 12px;
+  border-radius: var(--r);
+  border: 1px solid var(--border-light);
   background: var(--bg-panel);
   box-shadow: var(--shadow-card);
 }
@@ -105,10 +204,4 @@ textarea {
   gap: 6px;
   font-size: 12px;
   color: var(--text-secondary);
-}
-.field fluent-text-input {
-  width: 100%;
-}
-.modal fluent-button {
-  min-height: 32px;
 }

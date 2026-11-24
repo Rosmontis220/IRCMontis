@@ -1,11 +1,4 @@
 <script lang="ts">
-  import '@fluentui/web-components/button.js';
-  import '@fluentui/web-components/text-input.js';
-  import '@fluentui/web-components/switch.js';
-  import '@fluentui/web-components/slider.js';
-  import '@fluentui/web-components/dropdown.js';
-  import '@fluentui/web-components/listbox.js';
-  import '@fluentui/web-components/option.js';
   import { _ } from 'svelte-i18n';
   import { get } from 'svelte/store';
   import { open } from '@tauri-apps/plugin-dialog';
@@ -15,23 +8,6 @@
   import { setLocale } from '$lib/i18n';
 
   let tab = $state<'account' | 'appearance' | 'notifications' | 'general'>('appearance');
-  let themeDd: HTMLElement | undefined = $state();
-  let langDd: HTMLElement | undefined = $state();
-
-  // fluent-dropdown's value setter needs its slotted listbox; assigning during
-  // initial render throws, so set it once the slot assignment has run
-  $effect(() => {
-    tab;
-    const theme = app.settings.theme;
-    const locale = app.settings.locale;
-    setTimeout(() => {
-      if (themeDd) (themeDd as unknown as { value: string }).value = theme;
-      if (langDd) (langDd as unknown as { value: string }).value = locale;
-    }, 0);
-  });
-
-  const val = (e: Event) => (e.currentTarget as unknown as { value: string }).value;
-  const chk = (e: Event) => (e.currentTarget as unknown as { checked: boolean }).checked;
 
   function setTheme(v: string) {
     app.settings.theme = v as typeof app.settings.theme;
@@ -76,33 +52,29 @@
         {#if tab === 'account'}
           <div class="field">
             {$_('connect.nick')}
-            <fluent-text-input aria-label={$_('connect.nick')} value={app.settings.nick} oninput={(e: Event) => (app.settings.nick = val(e))} onchange={() => app.persist()}></fluent-text-input>
+            <input aria-label={$_('connect.nick')} value={app.settings.nick} oninput={(e) => (app.settings.nick = e.currentTarget.value)} onchange={() => app.persist()} />
           </div>
           <div class="field">
             {$_('connect.saslAccount')}
-            <fluent-text-input aria-label={$_('connect.saslAccount')} value={app.settings.saslAccount} oninput={(e: Event) => (app.settings.saslAccount = val(e))} onchange={() => app.persist()}></fluent-text-input>
+            <input aria-label={$_('connect.saslAccount')} value={app.settings.saslAccount} oninput={(e) => (app.settings.saslAccount = e.currentTarget.value)} onchange={() => app.persist()} />
           </div>
           <div class="field">
             {$_('connect.saslPassword')}
-            <fluent-text-input aria-label={$_('connect.saslPassword')} type="password" value={app.settings.saslPassword} oninput={(e: Event) => (app.settings.saslPassword = val(e))} onchange={() => app.persist()}></fluent-text-input>
+            <input aria-label={$_('connect.saslPassword')} type="password" value={app.settings.saslPassword} oninput={(e) => (app.settings.saslPassword = e.currentTarget.value)} onchange={() => app.persist()} />
           </div>
           {#if app.connected}
-            <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-            <fluent-button onclick={() => app.disconnect()}>{$_('settings.disconnect')}</fluent-button>
+            <button class="btn" onclick={() => app.disconnect()}>{$_('settings.disconnect')}</button>
           {:else}
-            <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-            <fluent-button appearance="primary" onclick={() => app.connect()}>{$_('settings.connect')}</fluent-button>
+            <button class="btn primary" onclick={() => app.connect()}>{$_('settings.connect')}</button>
           {/if}
         {:else if tab === 'appearance'}
           <div class="field">
             {$_('settings.theme')}
-            <fluent-dropdown bind:this={themeDd} aria-label={$_('settings.theme')} onchange={(e: Event) => setTheme(val(e))}>
-              <fluent-listbox>
-                <fluent-option value="light">{$_('settings.themeLight')}</fluent-option>
-                <fluent-option value="dark">{$_('settings.themeDark')}</fluent-option>
-                <fluent-option value="system">{$_('settings.themeSystem')}</fluent-option>
-              </fluent-listbox>
-            </fluent-dropdown>
+            <select aria-label={$_('settings.theme')} value={app.settings.theme} onchange={(e) => setTheme(e.currentTarget.value)}>
+              <option value="light">{$_('settings.themeLight')}</option>
+              <option value="dark">{$_('settings.themeDark')}</option>
+              <option value="system">{$_('settings.themeSystem')}</option>
+            </select>
           </div>
           <div class="field">
             {$_('settings.background')}
@@ -110,46 +82,57 @@
               {#if app.settings.backgroundPath}
                 <img class="thumb" src={convertFileSrc(app.settings.backgroundPath)} alt="" />
               {/if}
-              <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-              <fluent-button onclick={pickBackground}>{$_('settings.backgroundPick')}</fluent-button>
+              <button class="btn" onclick={pickBackground}>{$_('settings.backgroundPick')}</button>
               {#if app.settings.backgroundPath}
-                <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-                <fluent-button onclick={() => { app.settings.backgroundPath = null; app.persist(); }}>{$_('settings.backgroundClear')}</fluent-button>
+                <button class="btn" onclick={() => { app.settings.backgroundPath = null; app.persist(); }}>{$_('settings.backgroundClear')}</button>
               {/if}
             </div>
           </div>
           {#if app.settings.backgroundPath}
             <div class="field">
               {$_('settings.backgroundOpacity')} · {app.settings.backgroundOpacity}%
-              <fluent-slider
+              <input
+                type="range"
                 aria-label={$_('settings.backgroundOpacity')}
                 min="5"
                 max="100"
                 step="5"
-                value={String(app.settings.backgroundOpacity)}
-                onchange={(e: Event) => { app.settings.backgroundOpacity = Number(val(e)); app.persist(); }}
-              ></fluent-slider>
+                value={app.settings.backgroundOpacity}
+                oninput={(e) => { app.settings.backgroundOpacity = Number(e.currentTarget.value); app.persist(); }}
+              />
             </div>
           {/if}
         {:else if tab === 'notifications'}
           <div class="switchrow">
-            <fluent-switch aria-label={$_('settings.enableNotifications')} checked={app.settings.notifications} onchange={(e: Event) => { app.settings.notifications = chk(e); app.persist(); }}></fluent-switch>
+            <button
+              class="switch"
+              class:on={app.settings.notifications}
+              role="switch"
+              aria-checked={app.settings.notifications}
+              aria-label={$_('settings.enableNotifications')}
+              onclick={() => { app.settings.notifications = !app.settings.notifications; app.persist(); }}
+            ><span class="knob"></span></button>
             {$_('settings.enableNotifications')}
           </div>
           <p class="hint">{$_('sessions.muted')}：{$_('sessionMenu.mute')}</p>
         {:else}
           <div class="field">
             {$_('settings.language')}
-            <fluent-dropdown bind:this={langDd} aria-label={$_('settings.language')} onchange={(e: Event) => setLanguage(val(e))}>
-              <fluent-listbox>
-                <fluent-option value="system">{$_('settings.langSystem')}</fluent-option>
-                <fluent-option value="zh">中文</fluent-option>
-                <fluent-option value="en">English</fluent-option>
-              </fluent-listbox>
-            </fluent-dropdown>
+            <select aria-label={$_('settings.language')} value={app.settings.locale} onchange={(e) => setLanguage(e.currentTarget.value)}>
+              <option value="system">{$_('settings.langSystem')}</option>
+              <option value="zh">中文</option>
+              <option value="en">English</option>
+            </select>
           </div>
           <div class="switchrow">
-            <fluent-switch aria-label={$_('settings.closeToTray')} checked={app.settings.closeToTray} onchange={(e: Event) => { app.settings.closeToTray = chk(e); app.persist(); }}></fluent-switch>
+            <button
+              class="switch"
+              class:on={app.settings.closeToTray}
+              role="switch"
+              aria-checked={app.settings.closeToTray}
+              aria-label={$_('settings.closeToTray')}
+              onclick={() => { app.settings.closeToTray = !app.settings.closeToTray; app.persist(); }}
+            ><span class="knob"></span></button>
             {$_('settings.closeToTray')}
           </div>
         {/if}
@@ -168,10 +151,10 @@
   nav button {
     border: none; background: transparent; text-align: left;
     padding: 8px 10px; border-radius: 6px; font-size: 13px;
-    color: var(--text-primary); cursor: pointer;
+    color: var(--text-primary); cursor: pointer; font-family: inherit;
   }
-  nav button:hover { background: var(--bg-session-active); }
-  nav button.on { background: var(--bg-session-active); color: var(--qq-blue); font-weight: 600; }
+  nav button:hover { background: var(--bg-hover); }
+  nav button.on { background: var(--bg-session-active); color: var(--accent); font-weight: 600; }
   .content { flex: 1; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
   .bgrow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .thumb { width: 72px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-light); }

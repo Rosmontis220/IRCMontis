@@ -11,8 +11,7 @@
   let { session }: { session: Session } = $props();
 
   let scroller: HTMLDivElement | undefined = $state();
-  let showMembers = $state(false);
-  let showSearch = $state(false);
+  let showMembers = $state(true);
   let query = $state('');
   let results = $state<StoredMessage[]>([]);
   let searching = $state(false);
@@ -23,7 +22,6 @@
 
   $effect(() => {
     session.name;
-    showSearch = false;
     query = '';
     results = [];
     highlightId = null;
@@ -39,7 +37,7 @@
   function onScroll() {
     if (!scroller) return;
     nearBottom = scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 60;
-    if (scroller.scrollTop < 40 && app.loaded[session.name] && !showSearch) {
+    if (scroller.scrollTop < 40 && app.loaded[session.name]) {
       const before = scroller.scrollHeight;
       void app.loadOlder(session.name).then(() => {
         if (scroller) scroller.scrollTop += scroller.scrollHeight - before;
@@ -60,10 +58,16 @@
     }
   }
 
+  function onSearch(v: string) {
+    query = v;
+    void runSearch();
+  }
+
   async function jump(m: StoredMessage) {
     const rows = await app.jumpTo(session.name, m.ts);
     highlightId = m.id;
-    showSearch = false;
+    query = '';
+    results = [];
     queueMicrotask(() => {
       const el = scroller?.querySelector(`[data-mid="${m.id}"]`);
       el?.scrollIntoView({ block: 'center' });
@@ -87,43 +91,11 @@
       {#if session.topic}<span class="topic" title={session.topic}>{session.topic}</span>{/if}
     </div>
     <div class="actions">
-      <button class:on={showSearch} title={$_('chat.search')} onclick={() => (showSearch = !showSearch)}>
-        <svg width="15" height="15" viewBox="0 0 15 15"><circle cx="6.2" cy="6.2" r="4.4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M9.6 9.6L13.5 13.5" stroke="currentColor" stroke-width="1.5"/></svg>
-      </button>
-      {#if session.kind === 'channel'}
-        <button class:on={showMembers} title={$_('chat.members')} onclick={() => (showMembers = !showMembers)}>
-          <svg width="15" height="15" viewBox="0 0 15 15"><circle cx="5.4" cy="4.6" r="2.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1.2 12.6c0-2.4 1.9-4 4.2-4s4.2 1.6 4.2 4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="10.8" cy="5" r="2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M10.6 8.8c1.9.2 3.2 1.6 3.2 3.6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
-        </button>
-      {/if}
-      <button class:on={session.muted} title={session.muted ? $_('sessionMenu.unmute') : $_('sessionMenu.mute')} onclick={() => app.setMuted(session.name, !session.muted)}>
-        <svg width="15" height="15" viewBox="0 0 15 15"><path d="M1.5 5.5h3l3.5-3v10l-3.5-3h-3z" fill="currentColor"/>{#if session.muted}<path d="M9.5 5l4 5M13.5 5l-4 5" stroke="currentColor" stroke-width="1.4"/>{:else}<path d="M10 5.2c1.4 1.3 1.4 3.3 0 4.6M11.8 3.6c2.3 2.2 2.3 5.6 0 7.8" fill="none" stroke="currentColor" stroke-width="1.3"/>{/if}</svg>
+      <button class:on={showMembers} title={$_('chat.members')} onclick={() => (showMembers = !showMembers)}>
+        <svg width="15" height="15" viewBox="0 0 15 15"><circle cx="5.4" cy="4.6" r="2.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1.2 12.6c0-2.4 1.9-4 4.2-4s4.2 1.6 4.2 4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="10.8" cy="5" r="2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M10.6 8.8c1.9.2 3.2 1.6 3.2 3.6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
       </button>
     </div>
   </div>
-
-  {#if showSearch}
-    <div class="searchbar">
-      <input
-        placeholder={$_('chat.searchPlaceholder')}
-        bind:value={query}
-        oninput={runSearch}
-        onkeydown={(e) => e.key === 'Escape' && (showSearch = false)}
-      />
-      <span class="count">{searching ? '…' : results.length}</span>
-      <button title={$_('chat.close')} onclick={() => (showSearch = false)}>✕</button>
-    </div>
-    <div class="results">
-      {#each results as m (m.id)}
-        <button onclick={() => jump(m)}>
-          <span class="rtime">{new Date(m.ts).toLocaleString()}</span>
-          <span class="rsender">{m.sender}</span>
-          <span class="rtext">{m.text}</span>
-        </button>
-      {:else}
-        <div class="noresult">{$_('chat.noResult')}</div>
-      {/each}
-    </div>
-  {/if}
 
   <div class="body">
     {#if app.settings.backgroundPath}
@@ -145,8 +117,17 @@
         </div>
       {/each}
     </div>
-    {#if showMembers && session.kind === 'channel'}
-      <MemberList session={session.name} />
+    {#if showMembers}
+      <MemberList
+        session={session.name}
+        {query}
+        {results}
+        {searching}
+        muted={session.muted}
+        onSearch={onSearch}
+        onJump={jump}
+        onMute={() => app.setMuted(session.name, !session.muted)}
+      />
     {/if}
   </div>
 
@@ -172,36 +153,8 @@
     border: none; border-radius: 6px; background: transparent;
     color: var(--text-secondary); cursor: pointer;
   }
-  .actions button:hover { background: var(--bg-session-active); color: var(--qq-blue); }
-  .actions button.on { color: var(--qq-blue); background: var(--bg-session-active); }
-  .searchbar {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 16px; background: var(--bg-panel);
-    border-bottom: 1px solid var(--border-light); flex: none;
-  }
-  .searchbar input {
-    flex: 1; border: 1px solid var(--border-light); border-radius: 6px;
-    background: var(--bg-chat); color: var(--text-primary);
-    padding: 6px 10px; font-size: 12px; outline: none;
-  }
-  .searchbar input:focus { border-color: var(--qq-blue); }
-  .count { font-size: 11px; color: var(--text-secondary); }
-  .searchbar button { border: none; background: transparent; color: var(--text-secondary); cursor: pointer; }
-  .results {
-    max-height: 220px; overflow-y: auto; flex: none;
-    background: var(--bg-panel); border-bottom: 1px solid var(--border-light);
-    padding: 4px 8px;
-  }
-  .results button {
-    display: flex; gap: 8px; width: 100%; text-align: left;
-    border: none; background: transparent; border-radius: 6px;
-    padding: 6px 8px; cursor: pointer; color: var(--text-primary); font-size: 12px;
-  }
-  .results button:hover { background: var(--bg-session-active); }
-  .rtime { color: var(--text-secondary); flex: none; font-size: 11px; }
-  .rsender { color: var(--qq-blue); flex: none; max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
-  .rtext { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .noresult { padding: 12px; text-align: center; font-size: 12px; color: var(--text-secondary); }
+  .actions button:hover { background: var(--bg-hover); color: var(--accent); }
+  .actions button.on { color: var(--accent); background: var(--bg-session-active); }
   .body { flex: 1; min-height: 0; display: flex; position: relative; }
   .bg {
     position: absolute; inset: 0;
@@ -211,7 +164,7 @@
   .scroller { flex: 1; overflow-y: auto; padding: 8px 0 12px; position: relative; }
   .loading { text-align: center; font-size: 12px; color: var(--text-secondary); padding: 12px; }
   .day {
-    text-align: center; font-size: 11px; color: var(--text-secondary);
+    text-align: center; font-size: 11px; color: var(--text-3);
     margin: 10px 0 4px;
   }
   .highlight > :global(*) { animation: flash 1.6s ease-out; }

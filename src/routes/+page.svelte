@@ -1,5 +1,4 @@
 <script lang="ts">
-  import '@fluentui/web-components/button.js';
   import { onMount } from 'svelte';
   import { _ } from 'svelte-i18n';
   import { app } from '$lib/stores/app.svelte';
@@ -30,13 +29,9 @@
           <img src="/icon.svg" alt="" />
           <p>{$_('sessions.empty')}</p>
           {#if !app.connected && !app.connecting}
-            <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-            <fluent-button
-              appearance="primary"
-              onclick={() => (app.settings.nick ? app.connect() : (app.showConnect = true))}
-            >
+            <button class="btn primary" onclick={() => (app.settings.nick ? app.connect() : (app.showConnect = true))}>
               {app.settings.nick ? $_('status.connectNow') : $_('connect.submit')}
-            </fluent-button>
+            </button>
           {/if}
         </div>
       {/if}

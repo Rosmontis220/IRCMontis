@@ -1,6 +1,4 @@
 <script lang="ts">
-  import '@fluentui/web-components/button.js';
-  import '@fluentui/web-components/text-input.js';
   import { _ } from 'svelte-i18n';
   import { app } from '$lib/stores/app.svelte';
 
@@ -33,26 +31,24 @@
     </div>
     <div class="field">
       <span>{$_('connect.nick')}</span>
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <fluent-text-input
+      <input
         aria-label={$_('connect.nick')}
         placeholder={$_('connect.nickPlaceholder')}
         value={nick}
         oninput={(e: Event) => (nick = val(e))}
         onkeydown={(e: Event) => enter(e) && submit()}
-      ></fluent-text-input>
+      />
     </div>
     <div class="field">
       <span>{$_('connect.saslAccount')}</span>
-      <fluent-text-input aria-label={$_('connect.saslAccount')} value={account} oninput={(e: Event) => (account = val(e))}></fluent-text-input>
+      <input aria-label={$_('connect.saslAccount')} value={account} oninput={(e: Event) => (account = val(e))} />
     </div>
     <div class="field">
       <span>{$_('connect.saslPassword')}</span>
-      <fluent-text-input aria-label={$_('connect.saslPassword')} type="password" value={password} oninput={(e: Event) => (password = val(e))}></fluent-text-input>
+      <input aria-label={$_('connect.saslPassword')} type="password" value={password} oninput={(e: Event) => (password = val(e))} />
     </div>
     {#if error}<div class="err">{error}</div>{/if}
-    <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-    <fluent-button appearance="primary" onclick={submit}>{$_('connect.submit')}</fluent-button>
+    <button class="btn primary" onclick={submit}>{$_('connect.submit')}</button>
     <p class="hint">{$_('connect.registerHint')}</p>
     <button class="skip" onclick={() => (app.showConnect = false)}>{$_('chat.close')}</button>
   </div>
@@ -65,5 +61,5 @@
     align-self: center; border: none; background: transparent;
     color: var(--text-secondary); font-size: 12px; cursor: pointer;
   }
-  .skip:hover { color: var(--qq-blue); }
+  .skip:hover { color: var(--accent); }
 </style>

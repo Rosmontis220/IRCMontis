@@ -1,6 +1,4 @@
 <script lang="ts">
-  import '@fluentui/web-components/button.js';
-  import '@fluentui/web-components/text-input.js';
   import { _ } from 'svelte-i18n';
   import { app } from '$lib/stores/app.svelte';
   import { api } from '$lib/irc/api';
@@ -24,15 +22,13 @@
     <p class="hint">{$_('nick.body', { values: { nick: app.nickInUse ?? '' } })}</p>
     <div class="field">
       <span>{$_('connect.nick')}</span>
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <fluent-text-input
+      <input
         aria-label={$_('connect.nick')}
         value={nick}
         oninput={(e: Event) => (nick = val(e))}
         onkeydown={(e: Event) => (e as KeyboardEvent).key === 'Enter' && submit()}
-      ></fluent-text-input>
+      />
     </div>
-    <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-    <fluent-button appearance="primary" onclick={submit}>{$_('nick.submit')}</fluent-button>
+    <button class="btn primary" onclick={submit}>{$_('nick.submit')}</button>
   </div>
 </div>

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import '@fluentui/web-components/button.js';
   import { _ } from 'svelte-i18n';
   import { app } from '$lib/stores/app.svelte';
   import EmojiPanel from './EmojiPanel.svelte';
@@ -94,10 +93,9 @@
       onkeydown={onKey}
       oninput={() => (completion = null)}
     ></textarea>
-    <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-    <fluent-button appearance="primary" shape="rounded" disabled={!app.connected || !value.trim()} onclick={send}>
+    <button class="btn primary" disabled={!app.connected || !value.trim()} onclick={send}>
       {$_('input.send')}
-    </fluent-button>
+    </button>
   </div>
 </div>
 
@@ -114,14 +112,14 @@
     border: none; border-radius: 6px; background: transparent;
     color: var(--text-secondary); cursor: pointer;
   }
-  .emoji:hover { background: var(--bg-session-active); color: var(--qq-blue); }
+  .emoji:hover { background: var(--bg-hover); color: var(--accent); }
   textarea {
     flex: 1; resize: none; max-height: 132px;
-    border: 1px solid var(--border-light); border-radius: 8px;
-    background: var(--bg-chat); color: var(--text-primary);
+    border: 1px solid var(--border-light); border-radius: 5px;
+    background: var(--bg-input); color: var(--text-primary);
     padding: 7px 10px; font: inherit; font-size: 13px; line-height: 1.5;
     outline: none;
   }
-  textarea:focus { border-color: var(--qq-blue); }
-  fluent-button { flex: none; }
+  textarea:focus { border-color: var(--accent); }
+  .btn { flex: none; }
 </style>
