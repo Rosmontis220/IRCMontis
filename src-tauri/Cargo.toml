@@ -1,0 +1,38 @@
+[package]
+name = "ircmontis"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "IRCMontis — a QQ-style IRC client for Libera.chat"
+
+[lib]
+name = "ircmontis_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build.workspace = true
+
+[dependencies]
+ircmontis-irc.workspace = true
+tauri.workspace = true
+tauri-plugin-notification.workspace = true
+tauri-plugin-dialog.workspace = true
+tauri-plugin-opener.workspace = true
+tauri-plugin-os.workspace = true
+tauri-plugin-process.workspace = true
+tauri-plugin-updater.workspace = true
+tauri-plugin-background-service.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+async-trait.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+tokio.workspace = true
+rusqlite.workspace = true
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-single-instance.workspace = true
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

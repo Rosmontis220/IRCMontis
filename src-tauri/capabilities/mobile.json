@@ -1,0 +1,17 @@
+{
+  "$schema": "../gen/schemas/mobile-schema.json",
+  "identifier": "mobile",
+  "description": "Mobile window permissions",
+  "windows": ["main"],
+  "platforms": ["android", "iOS"],
+  "permissions": [
+    "core:default",
+    "core:event:default",
+    "notification:default",
+    "dialog:default",
+    "opener:default",
+    "os:default",
+    "process:default",
+    "background-service:default"
+  ]
+}

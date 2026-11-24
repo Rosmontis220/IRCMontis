@@ -1,0 +1,11 @@
+node_modules
+/build
+/.svelte-kit
+/dist
+/target
+/src-tauri/gen/schemas
+/release-metadata
+/.icon-preview
+.tauri/
+*.log
+.DS_Store

@@ -1,0 +1,50 @@
+{
+  "name": "ircmontis",
+  "version": "0.1.0",
+  "description": "IRCMontis — a QQ-style IRC client for Libera.chat",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "test": "vitest run",
+    "tauri": "tauri",
+    "icon:preview": "node scripts/render-icon.mjs",
+    "app:version": "node scripts/client-version.mjs",
+    "app:version:show": "node scripts/client-version.mjs show",
+    "app:version:check": "node scripts/client-version.mjs check",
+    "app:changelog": "node scripts/release-notes.mjs changelog",
+    "app:changelog:check": "node scripts/release-notes.mjs check",
+    "app:release-notes": "node scripts/release-notes.mjs export",
+    "test:release-security": "python -B -m unittest discover -s scripts/tests -p \"test_*.py\""
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@fluentui/svg-icons": "1.1.344",
+    "@fluentui/tokens": "1.0.0-alpha.24",
+    "@fluentui/web-components": "3.1.3",
+    "@microsoft/fast-element": "3.0.0",
+    "@tauri-apps/api": "^2.12.4",
+    "@tauri-apps/plugin-dialog": "^2.8.3",
+    "@tauri-apps/plugin-notification": "^2.7.0",
+    "@tauri-apps/plugin-opener": "^2.7.2",
+    "@tauri-apps/plugin-os": "~2.4.0",
+    "@tauri-apps/plugin-process": "^2.4.0",
+    "svelte-i18n": "^4.0.1"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/kit": "^2.70.3",
+    "@sveltejs/vite-plugin-svelte": "^5.1.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tauri-apps/cli": "^2.12.4",
+    "svelte": "^5.57.2",
+    "svelte-check": "^4.7.7",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.6.3",
+    "vite": "^6.4.5",
+    "vitest": "^4.1.12"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "app": { "name": "IRCMontis" },
+  "titlebar": { "minimize": "Minimize", "maximize": "Maximize / Restore", "close": "Close" },
+  "connect": {
+    "title": "Connect to Libera.chat",
+    "nick": "Nickname",
+    "nickPlaceholder": "Enter your IRC nickname",
+    "saslAccount": "SASL account (optional)",
+    "saslPassword": "SASL password (optional)",
+    "submit": "Connect",
+    "connecting": "Connecting…",
+    "registerHint": "No account? After connecting, register with /msg NickServ REGISTER password email.",
+    "nickRequired": "Please enter a nickname first"
+  },
+  "status": {
+    "offline": "Offline",
+    "reconnecting": "Disconnected, reconnecting in {secs}s",
+    "connected": "Connected",
+    "connectNow": "Reconnect now"
+  },
+  "sessions": {
+    "title": "Chats",
+    "empty": "No chats yet — join a channel to start",
+    "join": "Join channel",
+    "muted": "Muted"
+  },
+  "sessionMenu": {
+    "mute": "Mute notifications",
+    "unmute": "Unmute notifications",
+    "leave": "Leave channel",
+    "delete": "Delete chat"
+  },
+  "chat": {
+    "members": "Members",
+    "search": "Search",
+    "searchPlaceholder": "Search history in this chat",
+    "searchEmpty": "No matching messages",
+    "loading": "Loading history…",
+    "close": "Close",
+    "loadOlder": "Load older messages",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "topicEmpty": "No topic set"
+  },
+  "members": {
+    "owners": "Owners (~&)",
+    "admins": "Admins (@)",
+    "halfops": "Half-ops (%)",
+    "voices": "Voiced (+)",
+    "members": "Members",
+    "count": "{n} people"
+  },
+  "input": {
+    "placeholder": "Type a message. Enter to send, Shift+Enter for newline",
+    "send": "Send",
+    "emoji": "Emoji"
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "appearance": "Appearance",
+    "notifications": "Notifications",
+    "general": "General",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "background": "Chat background image",
+    "backgroundPick": "Choose image",
+    "backgroundClear": "Clear background",
+    "backgroundOpacity": "Background opacity",
+    "closeToTray": "Close to tray instead of quitting",
+    "language": "Language",
+    "langSystem": "System",
+    "enableNotifications": "Enable message notifications",
+    "disconnect": "Disconnect",
+    "connect": "Connect"
+  },
+  "nick": {
+    "title": "Nickname in use",
+    "body": "Nickname {nick} is already taken. Enter a new one",
+    "submit": "Use this nickname"
+  },
+  "join": {
+    "title": "Join channel",
+    "placeholder": "Channel name, e.g. #libera",
+    "submit": "Join"
+  },
+  "system": {
+    "joined": "{nick} joined the channel",
+    "parted": "{nick} left the channel",
+    "kicked": "{nick} was kicked by {setter}",
+    "quit": "{nick} quit IRC",
+    "nickChange": "{old} is now known as {new}",
+    "mode": "{setter} sets mode {modes}",
+    "joinFailed": "Failed to join {channel}: {reason}",
+    "sendFailed": "Send failed: {reason}",
+    "connected": "Connected to Libera.chat",
+    "disconnected": "Disconnected: {reason}",
+    "unknownCommand": "Unknown command: /{cmd}"
+  },
+  "tray": { "show": "Show main window", "quit": "Quit" },
+  "emoji": { "title": "Emoji" }
+}

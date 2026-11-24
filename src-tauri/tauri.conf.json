@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "IRCMontis",
+  "version": "0.1.0",
+  "identifier": "com.ircmontis.app",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1910",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "IRCMontis",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 940,
+        "minHeight": 600,
+        "center": true,
+        "create": false,
+        "decorations": false
+      }
+    ],
+    "security": {
+      "csp": {
+        "default-src": "'self' customprotocol: asset:",
+        "connect-src": "ipc: http://ipc.localhost",
+        "font-src": "'self' data:",
+        "img-src": "'self' asset: http://asset.localhost blob: data:",
+        "script-src": "'self'",
+        "style-src": "'self' 'unsafe-inline'"
+      },
+      "assetProtocol": {
+        "enable": true,
+        "scope": ["$APPDATA/backgrounds/**"]
+      }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDkwNkRBRDE4MkQzOUY0REIKUldUYjlEa3RHSzF0a0JrTVo4SWVvaXdCY0ZRaEt5OU53MFlqRGxSQ09OeCszS1I3LytyUVRicEUK",
+      "windows": {
+        "installMode": "passive"
+      }
+    },
+    "background-service": {
+      "androidForegroundServiceTypes": ["dataSync"],
+      "androidNotificationChannelId": "ircmontis_background_service",
+      "androidNotificationChannelName": "IRCMontis Background Service",
+      "androidShowStopAction": false
+    }
+  },
+  "bundle": {
+    "active": true,
+    "createUpdaterArtifacts": true,
+    "targets": "all",
+    "windows": {
+      "wix": {
+        "version": "0.1.0"
+      }
+    },
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}
