@@ -193,7 +193,11 @@ async fn connect(cfg: &ConnectConfig) -> Result<TlsStream, ConnectError> {
     let roots = rustls::RootCertStore {
         roots: webpki_roots::TLS_SERVER_ROOTS.to_vec(),
     };
-    let config = rustls::ClientConfig::builder()
+    // both ring and aws-lc-rs end up enabled via feature unification, so the
+    // process-default provider is ambiguous and builder() would panic
+    let provider = Arc::new(rustls::crypto::aws_lc_rs::default_provider());
+    let config = rustls::ClientConfig::builder_with_provider(provider)
+        .with_safe_default_protocol_versions()?
         .with_root_certificates(roots)
         .with_no_client_auth();
     let connector = TlsConnector::from(Arc::new(config));
@@ -789,5 +793,20 @@ mod tests {
                 .iter()
                 .any(|c| c == "sasl" || c.starts_with("sasl="))
         );
+    }
+
+    // regression: with ring+aws-lc-rs both enabled the process-default provider is
+    // ambiguous; TLS config must be built with an explicit provider, never builder()
+    #[test]
+    fn tls_config_builds_with_explicit_provider() {
+        let roots = rustls::RootCertStore {
+            roots: webpki_roots::TLS_SERVER_ROOTS.to_vec(),
+        };
+        let provider = Arc::new(rustls::crypto::aws_lc_rs::default_provider());
+        let _ = rustls::ClientConfig::builder_with_provider(provider)
+            .with_safe_default_protocol_versions()
+            .expect("safe default protocol versions")
+            .with_root_certificates(roots)
+            .with_no_client_auth();
     }
 }
