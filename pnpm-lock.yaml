@@ -16,10 +16,10 @@ importers:
         version: 1.0.0-alpha.24
       '@fluentui/web-components':
         specifier: 3.2.1
-        version: 3.2.1(@microsoft/fast-element@3.0.0)(@microsoft/focusgroup-polyfill@1.6.0)
+        version: 3.2.1(@microsoft/fast-element@3.1.4)(@microsoft/focusgroup-polyfill@1.6.0)
       '@microsoft/fast-element':
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 3.1.4
+        version: 3.1.4
       '@tauri-apps/api':
         specifier: ^2.12.4
         version: 2.12.5
@@ -415,8 +415,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@microsoft/fast-element@3.0.0':
-    resolution: {integrity: sha512-XjOUCGT0zSueOzNyelA6qq+Gvu6QiC1mT1s9Th2xwoqVTHsUV9xr7zJO74ZHoiT2+/jIXu7/wnVgalug0b1RzQ==}
+  '@microsoft/fast-element@3.1.4':
+    resolution: {integrity: sha512-HiMkg6p4FtJjUpWWf9L8PZDLTwh1eJ5VoxQPc0GZRqnsjn6fkkDMc10QRclwcqeqjIfalSY3ZScqf2YcTEqkzw==}
 
   '@microsoft/focusgroup-polyfill@1.6.0':
     resolution: {integrity: sha512-SlJO8FKrdFdSEXtNTNPTlCeqyqbpyLf6suYHTK7G8WYXZf8/BWK0ucERiPgrUIpNewfQjV82BahSOW/p8YNJ1A==}
@@ -1545,10 +1545,10 @@ snapshots:
     dependencies:
       '@swc/helpers': 0.5.24
 
-  '@fluentui/web-components@3.2.1(@microsoft/fast-element@3.0.0)(@microsoft/focusgroup-polyfill@1.6.0)':
+  '@fluentui/web-components@3.2.1(@microsoft/fast-element@3.1.4)(@microsoft/focusgroup-polyfill@1.6.0)':
     dependencies:
       '@fluentui/tokens': 1.0.0-alpha.24
-      '@microsoft/fast-element': 3.0.0
+      '@microsoft/fast-element': 3.1.4
       '@microsoft/focusgroup-polyfill': 1.6.0
       tslib: 2.9.1
 
@@ -1598,7 +1598,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.3
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@microsoft/fast-element@3.0.0': {}
+  '@microsoft/fast-element@3.1.4': {}
 
   '@microsoft/focusgroup-polyfill@1.6.0': {}
 

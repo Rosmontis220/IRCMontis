@@ -24,7 +24,7 @@
     "@fluentui/svg-icons": "1.1.344",
     "@fluentui/tokens": "1.0.0-alpha.24",
     "@fluentui/web-components": "3.2.1",
-    "@microsoft/fast-element": "3.0.0",
+    "@microsoft/fast-element": "3.1.4",
     "@tauri-apps/api": "^2.12.4",
     "@tauri-apps/plugin-dialog": "^2.8.3",
     "@tauri-apps/plugin-notification": "^2.7.0",
