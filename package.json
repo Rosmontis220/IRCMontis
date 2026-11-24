@@ -1,6 +1,6 @@
 {
   "name": "ircmontis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "IRCMontis — a QQ-style IRC client for Libera.chat",
   "type": "module",
   "scripts": {

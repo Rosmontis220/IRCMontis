@@ -1937,7 +1937,7 @@ checksum = "791930b43c0d5973160d90a8f3894509f2b273430f5c5c73b668636d0287c5c0"
 
 [[package]]
 name = "ircmontis"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "async-trait",
  "ircmontis-irc",
@@ -1960,7 +1960,7 @@ dependencies = [
 
 [[package]]
 name = "ircmontis-irc"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "base64 0.23.1",
  "rustls",
